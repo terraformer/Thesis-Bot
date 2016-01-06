@@ -1,10 +1,3 @@
-/* 
-Copyright 2016 Christian Liebl. 
-
-Licenced under the GNU GPL Version 3.
-
-Contact: christian.liebl@live.de
-*/
 
 #ifndef configuration_h
 #define configuration_h
@@ -27,10 +20,6 @@ int maxY = -2000;
 int offX = 0;
 int offY = 0;
 
-////////////////////
-//Global Variablen//
-////////////////////
-
 // Magnetometer
 HMC5883L compass;
 
@@ -40,5 +29,8 @@ volatile int rotpos2 = 0;
 
 int Ursprung; 
 
+char inByte = 'X'; //Serial Input
+
+byte Power = 200; // Motor Power for rotation
 
 #endif

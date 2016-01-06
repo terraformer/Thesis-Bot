@@ -4,18 +4,13 @@ Copyright 2016 Christian Liebl.
 Licenced under the GNU GPL Version 3.
 
 Contact: christian.liebl@live.de
+
+Basisfunktionen
 */
 
-#include "configuration.h"
-
-#ifndef fun_h
-#define fun_h
-
-
-long singleIR() // Einfache Boden IR Messung
-{
-  long dist_rechts = analogRead(IRRechts);
-  long dist_links = analogRead(IRLinks);
+int singleIR() { // Einfache Boden IR Messung
+  int dist_rechts = analogRead(IRRechts);
+  int dist_links = analogRead(IRLinks);
   
   if (dist_rechts < dist_links)
     return (dist_rechts);
@@ -338,4 +333,3 @@ void Orientieren() {
   Serial.println(" offY.");
 }
 
-#endif

@@ -1,9 +1,16 @@
-#include "HMC5883L.h"
-#include "rotary.h"
-#include "boards.h"
-#include "configuration.h"
-#include "fun.h"
-#include <Wire.h>
+/* 
+Copyright 2016 Christian Liebl. 
+
+Licenced under the GNU GPL Version 3.
+
+Contact: christian.liebl@live.de
+*/
+
+#include <Wire.h>           //Arduino Core Functions
+#include "boards.h"         //PCB Version bzw Pin Zuordnung
+#include "HMC5883L.h" 		  //Magnetometer
+#include "rotary.h"   		  //Rotary Encoder
+#include "configuration.h"  //Global Configuration
 
 // Encoder Handler 
 Rotary r = Rotary(rot1a, rot1b);
@@ -39,6 +46,7 @@ analogReference(INTERNAL); // Für IR
 
 Serial.begin(9600);
 
+Serial.println("Booting ...");
 
 // Magnetometer initialisiren ..
 mag_setup();
@@ -56,48 +64,6 @@ float noTiltCompensate(Vector mag)
 {
   float heading = atan2(mag.YAxis, mag.XAxis);
   return heading;
-}
-
-void loop()
-{
-
-//Serial.println("Neue Testrunde");
-//delay(10000);
-//richtung();
-
-
-// verfügbare Demos: (einkommentieren zum aktivieren)
-
-//drehen_demo();
-
-//muster_1_demo();
-
-//wand_suchen();
-
-//demox();
-
-//demoY();
-
-//Serial.println(boden_test());
-
-//motorVor();
-
-//tisch_demo0(); // :)
-
-//feature_demo0(); :)
-
-//demo_rot90();
- 
-//wand_ausrichten(); //buggy
-}
-
-void boden_demo(){
-
-int test = measureIR();
-
-Serial.println(test);
-//delay(100);
-  
 }
 
 void demo_rot90() { // 90 Grad Drehungen auf Basis der Rotationsencoderwerte
@@ -127,13 +93,13 @@ void distanzieren(int cm) { //Abstand zu Hinternis ändern
   motorStop();
 }
 
-void demoX{ //Zufallsrichtung
+void demoX() { //Zufallsrichtung
   while (true) {
     ausrichten(random(0,360));
     delay(500);
   }
 }
-void demoY // Distanzwechsel   
+void demoY() { // Distanzwechsel   
   distanzieren(10);
   delay(1000);
   distanzieren (30);
@@ -371,3 +337,81 @@ ISR(PCINT2_vect) {
      result2 == DIR_CW ? rotpos2++ : rotpos2--;
   }
 }
+
+
+void loop()
+{
+
+// send data only when you receive data:
+   if (Serial.available() > 0) {
+      // read the incoming byte:
+      inByte = Serial.read();
+
+      // say what you got:
+      Serial.print("bestätige: ");
+      Serial.println(inByte);
+
+      switch (inByte) {
+         case '0':
+            drehen_demo();
+            break;
+         case '1':
+            tisch_demo0(); // :)
+            break;
+         case '2':
+            feature_demo0(); // :)
+            break;
+          case '3':
+            demo_rot90();
+            break;
+          case '4':
+            muster_1_demo();
+            break;
+          case 'W':
+            motorVor();
+            break;
+          case 'A':
+            motorLinks(Power);
+            break;
+          case 'D':
+            motorRechts(Power);
+            break;
+          case 'S':
+            motorRetour();
+            break;
+          case 'X':
+            motorHalt();
+            break;
+          default:
+            Serial.println("unbekanntes Kommando!");        
+      }
+   }
+
+
+//Serial.println("Neue Testrunde");
+//delay(10000);
+//richtung();
+
+
+//weitere verfügbare Demos: (einkommentieren zum aktivieren)
+
+//wand_suchen();
+
+//demox();
+
+//demoY();
+
+//Serial.println(boden_test());
+ 
+//wand_ausrichten(); //buggy
+}
+
+void boden_demo(){
+
+int test = measureIR();
+
+Serial.println(test);
+//delay(100);
+ 
+}
+

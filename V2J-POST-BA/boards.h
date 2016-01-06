@@ -4,11 +4,12 @@ Copyright 2016 Christian Liebl.
 Licenced under the GNU GPL Version 3.
 
 Contact: christian.liebl@live.de
+
+Pin Configuration
 */
 
 #ifndef boards_h
 #define boards_h
-
 
 //Frontsonar (Digital)
 #define TRIGGER_PIN 11
