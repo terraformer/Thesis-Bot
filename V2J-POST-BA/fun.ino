@@ -79,7 +79,6 @@ void mag_setup () {
       Serial.println("no Mag");
   }
       Serial.println("Mag init");
-  
 
   // Messbereich setzen
   compass.setRange(HMC5883L_RANGE_1_3GA);
@@ -180,7 +179,6 @@ void motorRechts(byte P){
   analogWrite(B1B,P);
   analogWrite(A1A,P);   
   digitalWrite(A1B,LOW);
-//  delay(100);  
   } else {
       motorRetour();
       delay(50);
@@ -246,7 +244,6 @@ int fit360 (int ergo) { // winkel anpassen Trimmen auf 0 - 360 Grad
         return ergo;
 } 
 
-
 void ausrichten(int neu){ //Ausrichten mitteln Magnetometer //zuckelt manchmal rum ... :( Masseträgheit ... hm MPU 6050 doch einbauen? klar TODO: Implementieren! 
   int alt = richtung();
   int akt = alt;
@@ -309,7 +306,6 @@ void linksausweichen(){ //Spur und Richtungswechsel linksrum
   ausrichten(Ursprung+180);
   motorVor();  
 }
-
 
 void Orientieren() {
   Serial.println("Magnetometer Kalibrieren in 10 Sekunden");

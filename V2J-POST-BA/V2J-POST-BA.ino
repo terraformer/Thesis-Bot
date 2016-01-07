@@ -4,6 +4,8 @@ Copyright 2016 Christian Liebl.
 Licenced under the GNU GPL Version 3.
 
 Contact: christian.liebl@live.de
+
+Implementation of an autonomous floor cleaning robot as Open Source and Open Hardware
 */
 
 #include <Wire.h>           //Arduino Core Functions
@@ -21,11 +23,17 @@ boolean flip = false;
 
 void setup()
 {
-  Serial.println("Runnung"); //debug
+Serial.begin(9600);
 
-// Initializing Trigger Output and Echo Input
+Serial.println("Booting ...");
+
+// Initializing Sonar: Trigger Output and Echo Input
 pinMode(TRIGGER_PIN, OUTPUT);
 pinMode(ECHO_PIN, INPUT);
+
+// Reset the Sonar trigger pin and wait half a second
+digitalWrite(TRIGGER_PIN, LOW);
+delayMicroseconds(500);
 
 // init motorpins
 pinMode(B1A, OUTPUT);
@@ -38,15 +46,7 @@ PCICR |= (1 << PCIE2) | (1 << PCIE1);
 PCMSK2 |= (1 << PCINT18) | (1 << PCINT19) | (1 << PCINT20) | (1 << PCINT23);
 sei();
 
-// Reset the trigger pin and wait a half a second
-digitalWrite(TRIGGER_PIN, LOW);
-delayMicroseconds(500);
-
-analogReference(INTERNAL); // Für IR 
-
-Serial.begin(9600);
-
-Serial.println("Booting ...");
+analogReference(INTERNAL); // Für IR -> 1.1V referance
 
 // Magnetometer initialisiren ..
 mag_setup();
@@ -57,6 +57,7 @@ Orientieren();
 //und auswerten 
 Ursprung = richtung();
 
+Serial.println("Thesis ROBOT Copyright (C) 2016 Christian Liebl"); 
 }
 
 // No tilt compensation
@@ -93,13 +94,13 @@ void distanzieren(int cm) { //Abstand zu Hinternis ändern
   motorStop();
 }
 
-void demoX() { //Zufallsrichtung
+void muster_Random() { //Zufallsrichtung
   while (true) {
     ausrichten(random(0,360));
     delay(500);
   }
 }
-void demoY() { // Distanzwechsel   
+void demo_Vor_Rueck() { // Distanzwechsel   
   distanzieren(10);
   delay(1000);
   distanzieren (30);
@@ -172,9 +173,11 @@ void tisch_demo() { // Vor und zurück mit Hinderniserkennung
     motorVor();
     //delay(50);
     //Boden = measureIR();
-    Wand = measureSONAR();
+    Wand = measureSONAR();  
   }
-
+  Serial.println(boden_test());
+  Serial.println(Wand);
+  
   motorHalt();
   motorRetour();
   delay(3000);
@@ -283,7 +286,6 @@ void wand_ausrichten(){
     wand_suchen();
 }
 
-
 void muster_1_demo(){
   delay(MEASURE_DELAY);
   long distanceSONAR = measureSONAR();
@@ -338,27 +340,26 @@ ISR(PCINT2_vect) {
   }
 }
 
-
 void loop()
 {
-
 // send data only when you receive data:
    if (Serial.available() > 0) {
       // read the incoming byte:
-      inByte = Serial.read();
+      RX = Serial.read();
 
       // say what you got:
-      Serial.print("bestätige: ");
-      Serial.println(inByte);
-
-      switch (inByte) {
+      Serial.print("bestätige: |");
+      Serial.print(RX);
+      Serial.print("|");
+      
+      switch (RX) {
          case '0':
             drehen_demo();
             break;
-         case '1':
+         case '8':
             tisch_demo0(); // :)
             break;
-         case '2':
+         case '7':
             feature_demo0(); // :)
             break;
           case '3':
@@ -367,41 +368,42 @@ void loop()
           case '4':
             muster_1_demo();
             break;
-          case 'W':
+          case '5':
+            demo_Vor_Rueck();
+            break;
+          case '6':
+            muster_Random();
+            break;
+          case 'w':
             motorVor();
             break;
-          case 'A':
-            motorLinks(Power);
-            break;
-          case 'D':
+          case 'a':
             motorRechts(Power);
             break;
-          case 'S':
+          case 'd':
+            motorLinks(Power);
+            break;
+          case 's':
             motorRetour();
             break;
-          case 'X':
+          case 'x':
             motorHalt();
-            break;
+//            break;
           default:
-            Serial.println("unbekanntes Kommando!");        
+            Serial.println("unbekanntes Kommando! Known Commands are 1, 2, 3, 4, 5, 6, w, a, s, d");        
       }
+      
    }
-
 
 //Serial.println("Neue Testrunde");
 //delay(10000);
 //richtung();
 
-
 //weitere verfügbare Demos: (einkommentieren zum aktivieren)
 
-//wand_suchen();
+//wand_suchen(); //buggy
 
-//demox();
-
-//demoY();
-
-//Serial.println(boden_test());
+//Serial.println(boden_test()); //lame
  
 //wand_ausrichten(); //buggy
 }

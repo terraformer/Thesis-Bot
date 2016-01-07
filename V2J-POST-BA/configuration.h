@@ -29,8 +29,8 @@ volatile int rotpos2 = 0;
 
 int Ursprung; 
 
-char inByte = 'X'; //Serial Input
+char RX = 'X'; //Serial Input Chars
 
-byte Power = 200; // Motor Power for rotation
+byte Power = 255; // Motor Power for rotation
 
 #endif
