@@ -152,11 +152,15 @@ void motorRetour(){ // Beide Motoren retour
 }
 
 void motorVor(){ // Beide Motoren vor
+  motorVor(255,255);
+}
+
+void motorVor(byte PL, byte PR) { //Both Motor forward but width individual Speed
   if (boden_test()) { // Sicher ist sicher! Prüfen ob Boden unter den Rädern
   digitalWrite(B1A,LOW);   
-  digitalWrite(B1B,HIGH);
+  digitalWrite(B1B,PL);
   digitalWrite(A1A,LOW);   
-  digitalWrite(A1B,HIGH);
+  digitalWrite(A1B,PR);
   }
 }
 
