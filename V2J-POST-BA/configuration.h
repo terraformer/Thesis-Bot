@@ -32,5 +32,6 @@ int Ursprung;
 char RX = 'X'; //Serial Input Chars
 
 byte Power = 255; // Motor Power for rotation
+int floorsave = 60; // Min Sensor value for safe floor distance
 
 #endif

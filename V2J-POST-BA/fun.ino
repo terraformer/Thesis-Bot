@@ -57,10 +57,30 @@ long measureSONAR() // gemittelte Front Sonar Messung
 
 boolean boden_test(){ //Auswertung Bodensensor
    int test = measureIR();
-   if (test > 60) // Referenz messen statt hardcoode!!! TODO!!!
+   if (test > floorsave) // Referenz messen statt hardcoode!!! TODO!!!
      return 1; // Boden vorhanden
    else
      return 0; // kein Boden!
+}
+
+boolean front_test() { // check if there are obstacles in front 
+  return true; // dummy. TODO finish this function
+}
+
+boolean safe() {
+  if ( boden_test() and front_test() )
+    return true;
+  else
+    return false;
+}
+
+void beep(int f) { //basic adjustable Sound
+  for (int i=0; i<1000; i++) {
+    digitalWrite(buzzer, HIGH);
+    delayMicroseconds(f);
+    digitalWrite(buzzer, LOW);
+    delayMicroseconds(f); 
+  }
 }
 
 int diff(int a,int b) { // Ganzzahldifferenz ermitteln
@@ -152,11 +172,11 @@ void motorRetour(){ // Beide Motoren retour
 }
 
 void motorVor(){ // Beide Motoren vor
-  motorVor(255,255);
+  motorVor(255,255); //255 means full speed
 }
 
 void motorVor(byte PL, byte PR) { //Both Motor forward but width individual Speed
-  if (boden_test()) { // Sicher ist sicher! Prüfen ob Boden unter den Rädern
+  if (safe()) { // check for obstacles
   digitalWrite(B1A,LOW);   
   digitalWrite(B1B,PL);
   digitalWrite(A1A,LOW);   

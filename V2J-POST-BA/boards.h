@@ -11,27 +11,62 @@ Pin Configuration
 #ifndef boards_h
 #define boards_h
 
-//Frontsonar (Digital)
-#define TRIGGER_PIN 11
-#define ECHO_PIN 12
+// /* PCB V3B
+ 
+  ///Audio
+  #define buzzer 13
 
-//Pin, der den Transistor für die IR LEDs schaltet.  
-#define Licht 8
+  //Frontsonar (Digital)
+  #define TRIGGER_PIN 11
+  #define ECHO_PIN 12
 
-//Motorpins (PWM fähig)
-#define B1A 10
-#define B1B 5
-#define A1A 6
-#define A1B 9
+  //Pin, der den Transistor für die IR LEDs schaltet.  
+  #define Licht 8
 
-//encoderpins (Interrupt)
-#define rot1a 2
-#define rot1b 3
-#define rot2a 4
-#define rot2b 7
+  //Motorpins (PWM fähig)
+  #define B1A 10
+  #define B1B 5
+  #define A1A 6
+  #define A1B 9
 
-//int distanceIR; (Analog)
-#define IRRechts A1  //Photo resistor Pin Boden
-#define IRLinks A0  // Photo resistor Pin Boden
+  //encoderpins (Interrupt)
+  #define rot1a 2
+  #define rot1b 3
+  #define rot2a 4
+  #define rot2b 7
 
+  //int distanceIR; (Analog)
+  #define IRRechts A1  //Photo resistor Pin Boden
+  #define IRLinks A0  // Photo resistor Pin Boden
+
+//*/
+
+/* board PCB V3C
+ 
+  ///Audio
+  #define buzzer 13
+
+  //Frontsonar (Digital)
+  #define TRIGGER_PIN 8
+  #define ECHO_PIN 12
+
+  //Pin, der den Transistor für die IR LEDs schaltet.  
+  #define Licht 11
+
+  //Motorpins (PWM fähig)
+  #define B1A 10
+  #define B1B 5
+  #define A1A 6
+  #define A1B 9
+
+  //encoderpins (Interrupt)
+  #define rot1a 2
+  #define rot1b 3
+  #define rot2a 4
+  #define rot2b 7
+
+  //int distanceIR; (Analog)
+  #define IRRechts A1  //Photo resistor Pin Boden
+  #define IRLinks A0  // Photo resistor Pin Boden
+*/
 #endif
