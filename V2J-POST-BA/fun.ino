@@ -68,14 +68,16 @@ boolean front_test() { // check if there are obstacles in front
 }
 
 boolean safe() {
-  if ( boden_test() and front_test() )
+  if ( boden_test() and front_test() ) {
     return true;
-  else
+  } else {
     return false;
+    beep(1000);
+  }  
 }
 
 void beep(int f) { //basic adjustable Sound
-  for (int i=0; i<1000; i++) {
+  for (int i=0; i<1000; i++) { // TODO: constant length for various frequencies
     digitalWrite(buzzer, HIGH);
     delayMicroseconds(f);
     digitalWrite(buzzer, LOW);
@@ -291,6 +293,7 @@ void ausrichten(int neu){ //Ausrichten mitteln Magnetometer //zuckelt manchmal r
 
    }
    motorHalt();
+   beep(500);
 } 
 
 int rotcalib() { // Rotationsencoder mittels Magnetometerwerten kalibrieren

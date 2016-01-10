@@ -2,6 +2,8 @@
 #ifndef configuration_h
 #define configuration_h
 
+#include "boards.h"
+
 //allgemein
 #define MEASURE_SAMPLES 5
 #define MEASURE_SAMPLESir 5
@@ -33,5 +35,7 @@ char RX = 'X'; //Serial Input Chars
 
 byte Power = 255; // Motor Power for rotation
 int floorsave = 60; // Min Sensor value for safe floor distance
+
+#define PCB BOARD_V2H
 
 #endif

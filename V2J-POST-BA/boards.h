@@ -11,62 +11,11 @@ Pin Configuration
 #ifndef boards_h
 #define boards_h
 
-// /* PCB V3B
- 
-  ///Audio
-  #define buzzer 13
+// existing Boards and the latest Prototype
 
-  //Frontsonar (Digital)
-  #define TRIGGER_PIN 11
-  #define ECHO_PIN 12
+#define BOARD_V2H 1 // BA-Thesis Prototype Board
+#define BOARD_V3C 2 // Latest PCB Design       
 
-  //Pin, der den Transistor für die IR LEDs schaltet.  
-  #define Licht 8
+#define MB(board) (PCB==BOARD_##board)
 
-  //Motorpins (PWM fähig)
-  #define B1A 10
-  #define B1B 5
-  #define A1A 6
-  #define A1B 9
-
-  //encoderpins (Interrupt)
-  #define rot1a 2
-  #define rot1b 3
-  #define rot2a 4
-  #define rot2b 7
-
-  //int distanceIR; (Analog)
-  #define IRRechts A1  //Photo resistor Pin Boden
-  #define IRLinks A0  // Photo resistor Pin Boden
-
-//*/
-
-/* board PCB V3C
- 
-  ///Audio
-  #define buzzer 13
-
-  //Frontsonar (Digital)
-  #define TRIGGER_PIN 8
-  #define ECHO_PIN 12
-
-  //Pin, der den Transistor für die IR LEDs schaltet.  
-  #define Licht 11
-
-  //Motorpins (PWM fähig)
-  #define B1A 10
-  #define B1B 5
-  #define A1A 6
-  #define A1B 9
-
-  //encoderpins (Interrupt)
-  #define rot1a 2
-  #define rot1b 3
-  #define rot2a 4
-  #define rot2b 7
-
-  //int distanceIR; (Analog)
-  #define IRRechts A1  //Photo resistor Pin Boden
-  #define IRLinks A0  // Photo resistor Pin Boden
-*/
 #endif

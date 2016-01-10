@@ -9,7 +9,7 @@ Implementation of an autonomous floor cleaning robot as Open Source and Open Har
 */
 
 #include <Wire.h>           //Arduino Core Functions
-#include "boards.h"         //PCB Version bzw Pin Zuordnung
+#include "pins.h"           //Pin Zuordnung according to PCB Version
 #include "HMC5883L.h" 		  //Magnetometer
 #include "rotary.h"   		  //Rotary Encoder
 #include "configuration.h"  //Global Configuration

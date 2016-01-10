@@ -1,0 +1,9 @@
+Ab Version V2H pin 3 rotationsencoder und dafür pin 10 motor
+
+Ab Fritzing PCB V3 für optimiertes Routing
+#define B1A 10 -> 5
+#define B1B 5 -> 6
+#define A1A 6 -> 9
+#define A1B 9 -> 10
+
+Ab Fritzing PCB V3C Pin 11 Licht und Pin 8 Sonar Trigger
