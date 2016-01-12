@@ -91,7 +91,13 @@ int diff(int a,int b) { // Ganzzahldifferenz ermitteln
 
 void waitUpTo(unsigned long ms) { // Hilfsfunktion für Vorschub auf Timing Basis (inspiriert durch Quelle: http://forum.arduino.cc/index.php?topic=252523.0)
   unsigned long goal  = millis() + ms;
-  while((millis() < goal) and boden_test()); // Solange bis X und Boden unter den Rädern
+  while((millis() < goal) and safe()); // Solange bis X und Boden unter den Rädern
+}
+
+void moveUpTo(int x) { // Hilfsfunktion für Vorschub auf Timing Basis (inspiriert durch Quelle: http://forum.arduino.cc/index.php?topic=252523.0)
+  int goal  = rotpos1 + x;
+  while((rotpos1 < goal) and safe()) // Solange bis X und Boden unter den Rädern
+      motorVor();
 }
 
 void mag_setup () {
@@ -115,9 +121,7 @@ void mag_setup () {
   compass.setSamples(HMC5883L_SAMPLES_8);
 }
 
-
-// Correct angle
-float correctAngle(float heading)
+float correctAngle(float heading) // Correct angle
 {
   if (heading < 0) { heading += 2 * PI; }
   if (heading > 2 * PI) { heading -= 2 * PI; }
@@ -187,7 +191,7 @@ void motorVor(byte PL, byte PR) { //Both Motor forward but width individual Spee
 }
 
 void motorLinks(byte P){ // P für PWM Puls der die Motorleistung steuert.
-  if (boden_test()) { // Sicher ist sicher! Prüfen ob Boden unter den Rädern
+  if (safe()) { // Sicher ist sicher! Prüfen ob Boden unter den Rädern
   analogWrite(B1A,P);   
   digitalWrite(B1B,LOW);
   digitalWrite(A1A,LOW);   
@@ -200,7 +204,7 @@ void motorLinks(byte P){ // P für PWM Puls der die Motorleistung steuert.
 }  
 
 void motorRechts(byte P){
-  if (boden_test()) {
+  if (safe()) {
   digitalWrite(B1A,LOW);   
   analogWrite(B1B,P);
   analogWrite(A1A,P);   

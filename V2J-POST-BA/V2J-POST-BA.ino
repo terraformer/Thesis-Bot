@@ -94,7 +94,7 @@ void distanzieren(int cm) { //Abstand zu Hinternis ändern
   motorStop();
 }
 
-void muster_Random() { //Zufallsrichtung
+void random_direction() { //Zufallsrichtung
   while (true) {
     ausrichten(random(0,360));
     delay(500);
@@ -111,18 +111,15 @@ void tisch_demo0() {
   boolean Boden = boden_test();
   int sonarcounter = 0;
 
-  while (boden_test() and Wand > 10) {
+  while (safe() and Wand > 10) {
     motorVor();
-    Boden = boden_test();
     sonarcounter++;
     if (sonarcounter == 20) {
       sonarcounter = 0;
       Wand = measureSONAR();
     }
 
-  }
-//  Serial.println(Boden);
-//  Serial.println("Stop!");
+  }  
   motorHalt();
   motorRetour();
   delay(1500);
@@ -147,8 +144,6 @@ void feature_demo0(){
     }
 
   }
-//  Serial.println(Boden);
-//  Serial.println("Stop!");
   motorHalt();
   motorRetour();//ersetzt durch motor sicherheit
   delay(750);
@@ -162,14 +157,13 @@ void feature_demo0(){
     flip = true;
  //   richtung();
   } 
-
 }
 
 void tisch_demo() { // Vor und zurück mit Hinderniserkennung
   //int Boden = measureIR();
   int Wand = measureSONAR();
 
-  while ((Wand > 10) and boden_test()) {
+  while ((Wand > 10) and safe()) {
     motorVor();
     //delay(50);
     //Boden = measureIR();
@@ -188,26 +182,20 @@ void tisch_demo() { // Vor und zurück mit Hinderniserkennung
 }
 
 void drehen_demo(){
-
-ausrichten(90);
-delay(3000);
-
-ausrichten(180);
-delay(3000);
-
-ausrichten(270);
-delay(3000);
-
-ausrichten(0);
-delay(3000);
-
-ausrichten(270);
-delay(3000);
-
-ausrichten(360);
-delay(3000); 
+  for (int i=1; i < 5; i++){
+      ausrichten(i*90);
+      delay(3000);
+      Serial.print(i*90);
+      Serial.println("Grad");
+  }  
+  
+  for (int i=0; i < 4; i){
+      ausrichten(360 - i*90);
+      delay(3000);
+      Serial.print(360 - i*90);
+      Serial.println("Grad");
+  }  
 }
-
 
 //IR Frontsensoren nur teilimplementiert
 int LEDcalib() { // Umgebungslicht IR Anteil bestimmen. (Offset)
@@ -323,6 +311,12 @@ void muster_1_demo(){
   }
 }
 
+void boden_demo(){
+  int test = measureIR();
+  Serial.println(test);
+  //delay(100);
+}
+
 void bahnwechselzurueck(){
   //90 Grad drehen 
   //nächste Spur anfahren (Rumpfbreite vor)
@@ -372,7 +366,7 @@ void loop()
             demo_Vor_Rueck();
             break;
           case '6':
-            muster_Random();
+            random_direction();
             break;
           case 'w':
             motorVor();
@@ -404,16 +398,7 @@ void loop()
 //wand_suchen(); //buggy
 
 //Serial.println(boden_test()); //lame
- 
+
 //wand_ausrichten(); //buggy
-}
-
-void boden_demo(){
-
-int test = measureIR();
-
-Serial.println(test);
-//delay(100);
- 
 }
 

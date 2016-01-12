@@ -14,7 +14,7 @@ Pin Configuration
 // existing Boards and the latest Prototype
 
 #define BOARD_V2H 1 // BA-Thesis Prototype Board
-#define BOARD_V3C 2 // Latest PCB Design       
+#define BOARD_V3E 2 // Latest PCB Design       
 
 #define MB(board) (PCB==BOARD_##board)
 
