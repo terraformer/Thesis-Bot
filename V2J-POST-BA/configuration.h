@@ -14,6 +14,9 @@
 // Sonar
 #define USONIC_DIV 76.0  // Achtung Temperaturabhängig!
 
+//Board Revision
+#define PCB BOARD_V2H
+
 // Startwerte zur Kompasskalibrierung
 int minX = 2000;
 int maxX = -2000;
@@ -21,6 +24,9 @@ int minY = 1000;
 int maxY = -2000;
 int offX = 0;
 int offY = 0;
+
+//Accel Gyro MPU 6050
+MPU6050 accelgyro;
 
 // Magnetometer
 HMC5883L compass;
@@ -36,6 +42,7 @@ char RX = 'X'; //Serial Input Chars
 byte Power = 255; // Motor Power for rotation
 int floorsave = 60; // Min Sensor value for safe floor distance
 
-#define PCB BOARD_V2H
+int16_t ax, ay, az;
+int16_t gx, gy, gz;
 
 #endif

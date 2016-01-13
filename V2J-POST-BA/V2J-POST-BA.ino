@@ -11,6 +11,8 @@ Implementation of an autonomous floor cleaning robot as Open Source and Open Har
 #include <Wire.h>           //Arduino Core Functions
 #include "pins.h"           //Pin Zuordnung according to PCB Version
 #include "HMC5883L.h" 		  //Magnetometer
+#include "MPU6050.h"        //Gyro + Accel
+#include "I2Cdev.h"
 #include "rotary.h"   		  //Rotary Encoder
 #include "configuration.h"  //Global Configuration
 
@@ -57,6 +59,9 @@ Orientieren();
 //und auswerten 
 Ursprung = richtung();
 
+//init MPU6050
+accelgyro.begin();
+
 Serial.println("Thesis ROBOT Copyright (C) 2016 Christian Liebl"); 
 }
 
@@ -65,6 +70,10 @@ float noTiltCompensate(Vector mag)
 {
   float heading = atan2(mag.YAxis, mag.XAxis);
   return heading;
+}
+
+void MPU_Test() {
+  //accelgyro.readRawGyro(); // Well that does not work like expected ... TODO
 }
 
 void demo_rot90() { // 90 Grad Drehungen auf Basis der Rotationsencoderwerte
