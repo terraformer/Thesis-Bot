@@ -25,9 +25,6 @@ int maxY = -2000;
 int offX = 0;
 int offY = 0;
 
-//Accel Gyro MPU 6050
-MPU6050 accelgyro;
-
 // Magnetometer
 HMC5883L compass;
 
@@ -42,7 +39,8 @@ char RX = 'X'; //Serial Input Chars
 byte Power = 255; // Motor Power for rotation
 int floorsave = 60; // Min Sensor value for safe floor distance
 
-int16_t ax, ay, az;
-int16_t gx, gy, gz;
+//Accel Gyro MPU 6050
+const int MPU_addr=0x68;  // I2C address of the MPU-6050
+int16_t AcX,AcY,AcZ,Tmp,GyX,GyY,GyZ;
 
 #endif

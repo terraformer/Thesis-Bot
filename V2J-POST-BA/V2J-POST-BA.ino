@@ -11,8 +11,6 @@ Implementation of an autonomous floor cleaning robot as Open Source and Open Har
 #include <Wire.h>           //Arduino Core Functions
 #include "pins.h"           //Pin Zuordnung according to PCB Version
 #include "HMC5883L.h" 		  //Magnetometer
-#include "MPU6050.h"        //Gyro + Accel
-#include "I2Cdev.h"
 #include "rotary.h"   		  //Rotary Encoder
 #include "configuration.h"  //Global Configuration
 
@@ -25,6 +23,13 @@ boolean flip = false;
 
 void setup()
 {
+//init Accel Gyro MPU 6050
+Wire.begin();
+Wire.beginTransmission(MPU_addr);
+Wire.write(0x6B);  // PWR_MGMT_1 register
+Wire.write(0);     // set to zero (wakes up the MPU-6050)
+Wire.endTransmission(true);
+  
 Serial.begin(9600);
 
 Serial.println("Booting ...");
@@ -58,9 +63,6 @@ Orientieren();
 
 //und auswerten 
 Ursprung = richtung();
-
-//init MPU6050
-accelgyro.begin();
 
 Serial.println("Thesis ROBOT Copyright (C) 2016 Christian Liebl"); 
 }
@@ -376,6 +378,9 @@ void loop()
             break;
           case '6':
             random_direction();
+            break;
+          case '9':
+            print_mpu6050_raw();
             break;
           case 'w':
             motorVor();
