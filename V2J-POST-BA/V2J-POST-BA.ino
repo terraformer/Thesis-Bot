@@ -29,6 +29,7 @@ Wire.beginTransmission(MPU_addr);
 Wire.write(0x6B);  // PWR_MGMT_1 register
 Wire.write(0);     // set to zero (wakes up the MPU-6050)
 Wire.endTransmission(true);
+timer = micros();
   
 Serial.begin(9600);
 
@@ -378,6 +379,9 @@ void loop()
             break;
           case '6':
             random_direction();
+            break;
+          case '1':
+            print_mpu6050();
             break;
           case '9':
             print_mpu6050_raw();
