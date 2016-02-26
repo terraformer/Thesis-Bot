@@ -1,4 +1,4 @@
-/* 
+  /* 
 Copyright 2016 Christian Liebl. 
 
 Licenced under the GNU GPL Version 3.
@@ -64,6 +64,8 @@ Orientieren();
 
 //und auswerten 
 Ursprung = richtung();
+
+//floorsave = measureIR() + 20;
 
 Serial.println("Thesis ROBOT Copyright (C) 2016 Christian Liebl"); 
 }
@@ -344,10 +346,14 @@ ISR(PCINT2_vect) {
   if (result2) {
      result2 == DIR_CW ? rotpos2++ : rotpos2--;
   }
-}
+  if (!safe()) // check for obstacles
+    motorHalt();
+}   
 
 void loop()
 {
+//delay (1000);
+
 // send data only when you receive data:
    if (Serial.available() > 0) {
       // read the incoming byte:
@@ -364,6 +370,13 @@ void loop()
             break;
          case '8':
             tisch_demo0(); // :)
+                        motorHalt();
+            tisch_demo0();
+                        motorHalt();
+            tisch_demo0();
+                        motorHalt();
+            tisch_demo0();
+            motorHalt();
             break;
          case '7':
             feature_demo0(); // :)
@@ -395,14 +408,20 @@ void loop()
           case 'd':
             motorLinks(Power);
             break;
+          case 'z':
+            boden_demo();
+            break;
           case 's':
             motorRetour();
+            break;
+          case 'b':
+            beep(1000);
             break;
           case 'x':
             motorHalt();
 //            break;
           default:
-            Serial.println("unbekanntes Kommando! Known Commands are 1, 2, 3, 4, 5, 6, w, a, s, d");        
+            Serial.println("unbekanntes Kommando! Known Commands are 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, w, a, s, d, x, z");        
       }
       
    }

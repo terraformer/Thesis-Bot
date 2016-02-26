@@ -72,7 +72,6 @@ boolean safe() {
     return true;
   } else {
     return false;
-    beep(1000);
   }  
 }
 
@@ -236,8 +235,8 @@ void motorLinks90(){
 
 void motorRechts90(){
   long alt = richtung();
-  Serial.print(alt);
-  Serial.println("rechts alt grad");
+ // Serial.print(alt);
+  //Serial.println("rechts alt grad");
   long neu = alt + 90;
   if (neu > 360)
     neu = neu - 360;

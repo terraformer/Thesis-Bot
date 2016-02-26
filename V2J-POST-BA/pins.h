@@ -3,7 +3,7 @@
 
 #include "boards.h"
 
-#if MB(BOARD_V3B)
+//#if MB(BOARD_V2H) //initial Prototype Board
 
   ///Audio
   #define buzzer 13
@@ -30,10 +30,10 @@
   //int distanceIR; (Analog)
   #define IRRechts A1  //Photo resistor Pin Boden
   #define IRLinks A0  // Photo resistor Pin Boden
-
+/*
 #endif
 
-#if MB(BOARD_V3C)
+#if MB(BOARD_V3F)
 
   ///Audio
   #define buzzer 13
@@ -61,6 +61,6 @@
   #define IRRechts A1  //Photo resistor Pin Boden
   #define IRLinks A0  // Photo resistor Pin Boden
 
-#endif
+#endif */
 
 #endif
