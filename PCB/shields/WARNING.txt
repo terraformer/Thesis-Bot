@@ -1,0 +1,14 @@
+
+Since PCB V3C 
+	pin 11 Licht
+	pin 8 Sonar Trigger
+
+Since PCB V3 (for optimised Routing)
+	moved B1A from pin 10 to pin 5
+	moved B1B from pin 5 to pin 6
+	moved A1A from pin 6 to pin 9
+	moved A1B from pin 9 to pin 10
+
+Since PCB Version V2H
+	rotary encoder on pin 3
+	motor on pin 10
