@@ -61,6 +61,9 @@ analogReference(INTERNAL); // Für IR -> 1.1V referance
 // start magnetometer
 mag_setup();
 
+//waiting 10 sec before calibrating. TODO: wait instead until robot stands still some seconds 
+delay(10000);
+
 // calibrate magnetometer
 Orientieren();
 
@@ -69,7 +72,7 @@ Ursprung = richtung();
 
 //floorsave = measureIR() + 20;
 
-Serial.println("Thesis ROBOT Copyright (C) 2016 Christian Liebl"); 
+Serial.println("Author: Christian Liebl"); 
 }
 
 // No tilt compensation
@@ -85,8 +88,10 @@ void MPU_Test() {
 
 void demo_rot90() { // 90 Grad Drehungen auf Basis der Rotationsencoderwerte
   int vier = rotcalib();
+  /*
   Serial.println("Vierteldrehung");
   Serial.println(vier);
+  */
   rotausrichten(vier);
   delay(3000);
   rotausrichten(-vier);
@@ -105,7 +110,7 @@ void distanzieren(int cm) { //Abstand zu Hinternis ändern
     else
       motorRetour();
     Wand = measureSONAR();
-    Serial.println(Wand);
+    //Serial.println(Wand);
   }
   motorStop();
 }
@@ -185,9 +190,10 @@ void tisch_demo() { // drive forward until obstacle then turn backwards to rando
     //Boden = measureIR();
     Wand = measureSONAR();  
   }
+  /*
   Serial.println(boden_test());
   Serial.println(Wand);
-  
+  */
   motorHalt();
   motorRetour();
   delay(3000);
@@ -201,15 +207,19 @@ void drehen_demo(){ // show ability to reliably turn 90 degrees in variable dire
   for (int i=1; i < 5; i++){
       ausrichten(i*90);
       delay(3000);
+      /*
       Serial.print(i*90);
       Serial.println("Grad");
+      */
   }  
   
   for (int i=0; i < 4; i){
       ausrichten(360 - i*90);
       delay(3000);
+      /*
       Serial.print(360 - i*90);
       Serial.println("Grad");
+      */
   }  
 }
 
@@ -266,32 +276,32 @@ void wand_ausrichten(){ // rotate front sensor to nearest wall
   if (links+rechts / 2 == mitte) {
   while (diff(rechts,links)> 0) {
     ausrichten(alt+drehwinkel); 
-    Serial.print(alt+drehwinkel);
-    Serial.println("grad"); 
+    //Serial.print(alt+drehwinkel);
+    //Serial.println("grad"); 
     links = measureSONAR();
-    Serial.print(links);
-    Serial.println("links");
+    //Serial.print(links);
+    //Serial.println("links");
     ausrichten(alt-drehwinkel);
-    Serial.print(alt-drehwinkel);
-    Serial.println("grad");
+    //Serial.print(alt-drehwinkel);
+    //Serial.println("grad");
     rechts = measureSONAR();
-    Serial.print(rechts);
-    Serial.println("rechts");
+    //Serial.print(rechts);
+    //Serial.println("rechts");
     neu = (((float)links / (float)rechts) * drehwinkel * 2 - 90);
-    Serial.print(neu);
-    Serial.println("neu");
-    Serial.print(alt);
-    Serial.println("alt");
+    //Serial.print(neu);
+    //Serial.println("neu");
+    //Serial.print(alt);
+    //Serial.println("alt");
     ausrichten(alt+neu);
-    Serial.print(alt+neu);
-    Serial.println("neugrad");
+    //Serial.print(alt+neu);
+    //Serial.println("neugrad");
   }
   } else
     wand_suchen();
 }
 
 void muster_1_demo(){ // old zigzag move
-  delay(MEASURE_DELAY);
+//  delay(MEASURE_DELAY);
   long distanceSONAR = measureSONAR();
   long distanceIR = 1; //measureIR(); 
 
@@ -299,11 +309,11 @@ void muster_1_demo(){ // old zigzag move
  
   if ((distanceSONAR > 10.0) and (distanceIR < 10)) {
   motorVor();
-  Serial.print(distanceSONAR);
-  Serial.println(" cm (Sonar) weiter ...");
+  //Serial.print(distanceSONAR);
+  //Serial.println(" cm (Sonar) weiter ...");
   } else {
-  Serial.print(distanceSONAR);
-  Serial.println(" cm (Sonar) Achtung! ausweichen!");
+  //Serial.print(distanceSONAR);
+  //Serial.println(" cm (Sonar) Achtung! ausweichen!");
   
   if (flip) {
     if (distanceIR > 10) {
@@ -339,7 +349,7 @@ void bahnwechselzurueck(){
   //weiter 90 Grad -> versetzt zurück und dann das nächste mal anders rum lg anna :)
 }
 
-ISR(PCINT2_vect) { rotary encoder interrupt
+ISR(PCINT2_vect) { //rotary encoder interrupt
   char result = r.process();
   char result2 = r2.process();
   if (result) {
@@ -426,7 +436,7 @@ void loop()
             motorHalt();
 //            break;
           default:
-            Serial.println("unbekanntes Kommando! Known Commands are 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, w, a, s, d, x, z");        
+            Serial.println("no! use: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, w, a, s, d, x or z");        
       }   
    }
 //Serial.println("Neue Testrunde");

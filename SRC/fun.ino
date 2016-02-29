@@ -103,9 +103,9 @@ void mag_setup () {
   while (!compass.begin())
   {
     delay(500);
-      Serial.println("no Mag");
+      Serial.println("!mag");
   }
-      Serial.println("Mag init");
+  //    Serial.println("Mag init");
 
   // Messbereich setzen
   compass.setRange(HMC5883L_RANGE_1_3GA);
@@ -299,26 +299,20 @@ void ausrichten(int neu){ //Ausrichten mitteln Magnetometer //zuckelt manchmal r
    beep(500);
 } 
 
+int viertel(){
+   delay(3000);
+   return abs(rotpos1) + abs(rotpos2);  
+}
+
 int rotcalib() { // Rotationsencoder mittels Magnetometerwerten kalibrieren
-   int viertel = rotpos1 = rotpos2 = 0;
+   int quarter = rotpos1 = rotpos2 = 0;
 
-   ausrichten(90);
-   delay(3000);
-   viertel = abs(rotpos1) + abs(rotpos2);
+  for (int i=1; i < 5; i++){
+      ausrichten(i*90);
+      quarter+=viertel();
+  }  
 
-   ausrichten(180);
-   delay(3000);
-   viertel += abs(rotpos1) + abs(rotpos2);
-
-   ausrichten(270);
-   delay(3000);
-   viertel += abs(rotpos1) + abs(rotpos2);
-
-   ausrichten(0);
-   delay(3000);
-   viertel += abs(rotpos1) + abs(rotpos2);
-
-   return viertel = viertel / 8; // Anzahl der Rotationsimpulse für eine 90 Grad Drehung
+   return quarter = quarter / 8; // Anzahl der Rotationsimpulse für eine 90 Grad Drehung
 }
 
 void rechtsausweichen(){ //Spur und Richtungswechsel rechtsrum
@@ -338,24 +332,20 @@ void linksausweichen(){ //Spur und Richtungswechsel linksrum
 }
 
 void Orientieren() {
-  Serial.println("Magnetometer Kalibrieren in 10 Sekunden");
-  delay(10000);
-  for (int i=0; i < 5; i++){
-      motorLinks90();
-      Serial.print(i*12.5);
-      Serial.println("%");
-  }  
 
-  for (int i=5; i < 9; i++){
-      motorRechts90();
+  for (int i=0; i < 9; i++) {
+      if (i < 5)
+        motorLinks90();
+      else
+        motorRechts90();
       Serial.print(i*12.5);
       Serial.println("%");
-  }  
+  } 
 
   Serial.print(offX);
-  Serial.print(" offX; ");
+  Serial.print("oX;");
 
   Serial.print(offY);
-  Serial.println(" offY.");
+  Serial.println("oY;");
 }
 

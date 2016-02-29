@@ -7,7 +7,7 @@
 //allgemein
 #define MEASURE_SAMPLES 5
 #define MEASURE_SAMPLESir 5
-#define MEASURE_DELAY 250
+//#define MEASURE_DELAY 250
 #define MEASURE_SAMPLE_DELAYir 10
 #define MEASURE_SAMPLE_DELAY 10
 
