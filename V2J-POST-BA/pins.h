@@ -30,6 +30,18 @@
   //int distanceIR; (Analog)
   #define IRRechts A1  //Photo resistor Pin Boden
   #define IRLinks A0  // Photo resistor Pin Boden
+
+  //other pins
+  /*
+   * 0 (RX) connects to TX of bluetooth module (3.3V -> 5v)
+   * 1 (TX) connects to RX of bluetooth module (5v -> 3.3v dont forget voltage divider!)
+   * A2 front left IR
+   * A3 front right IR
+   * A4 SDA (I²C)
+   * A5 SCL (I²C)
+   * A6 side left IR
+   * A7 side right IR
+   */
 /*
 #endif
 

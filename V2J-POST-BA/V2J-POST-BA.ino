@@ -18,7 +18,9 @@ Implementation of an autonomous floor cleaning robot as Open Source and Open Har
 Rotary r = Rotary(rot1a, rot1b);
 Rotary r2 = Rotary(rot2a, rot2b);
 
-int distance;
+//int distance;
+
+//remember last turn for zigzag pattern
 boolean flip = false;
 
 void setup()
@@ -56,10 +58,10 @@ sei();
 
 analogReference(INTERNAL); // Für IR -> 1.1V referance
 
-// Magnetometer initialisiren ..
+// start magnetometer
 mag_setup();
 
-// kalibrieren
+// calibrate magnetometer
 Orientieren();
 
 //und auswerten 
@@ -120,7 +122,7 @@ void demo_Vor_Rueck() { // Distanzwechsel
   distanzieren (30);
 }
 
-void tisch_demo0() {
+void tisch_demo0() { // drive forward until obstacle then turn arround
   int Wand = measureSONAR();
   boolean Boden = boden_test();
   int sonarcounter = 0;
@@ -143,7 +145,7 @@ void tisch_demo0() {
   ausrichten(neu);
 }
 
-void feature_demo0(){
+void feature_demo0(){ // one full zigzag pattern. repeat ist to get everywhere!
   int Wand = measureSONAR();
   boolean Boden = boden_test();
   int sonarcounter = 0;
@@ -173,7 +175,7 @@ void feature_demo0(){
   } 
 }
 
-void tisch_demo() { // Vor und zurück mit Hinderniserkennung
+void tisch_demo() { // drive forward until obstacle then turn backwards to random direction
   //int Boden = measureIR();
   int Wand = measureSONAR();
 
@@ -195,7 +197,7 @@ void tisch_demo() { // Vor und zurück mit Hinderniserkennung
   ausrichten(neu);
 }
 
-void drehen_demo(){
+void drehen_demo(){ // show ability to reliably turn 90 degrees in variable directions
   for (int i=1; i < 5; i++){
       ausrichten(i*90);
       delay(3000);
@@ -229,7 +231,7 @@ int FrontIR () {
   return 1014; // Testwert
 }
 
-void wand_suchen(){
+void wand_suchen(){ //go to next wall
   ausrichten(0);
   int Wand = measureSONAR();
   int Winkel;
@@ -252,7 +254,7 @@ void wand_suchen(){
   motorStop();
 }
 
-void wand_ausrichten(){
+void wand_ausrichten(){ // rotate front sensor to nearest wall
   int drehwinkel = 25;
   int alt = richtung();
   int mitte=measureSONAR();
@@ -288,7 +290,7 @@ void wand_ausrichten(){
     wand_suchen();
 }
 
-void muster_1_demo(){
+void muster_1_demo(){ // old zigzag move
   delay(MEASURE_DELAY);
   long distanceSONAR = measureSONAR();
   long distanceIR = 1; //measureIR(); 
@@ -325,7 +327,7 @@ void muster_1_demo(){
   }
 }
 
-void boden_demo(){
+void boden_demo(){ // get floor value
   int test = measureIR();
   Serial.println(test);
   //delay(100);
@@ -337,7 +339,7 @@ void bahnwechselzurueck(){
   //weiter 90 Grad -> versetzt zurück und dann das nächste mal anders rum lg anna :)
 }
 
-ISR(PCINT2_vect) {
+ISR(PCINT2_vect) { rotary encoder interrupt
   char result = r.process();
   char result2 = r2.process();
   if (result) {
@@ -346,7 +348,7 @@ ISR(PCINT2_vect) {
   if (result2) {
      result2 == DIR_CW ? rotpos2++ : rotpos2--;
   }
-  if (!safe()) // check for obstacles
+  if (!safe()) // check for obstacles. prevents most crashes
     motorHalt();
 }   
 
@@ -370,11 +372,14 @@ void loop()
             break;
          case '8':
             tisch_demo0(); // :)
-                        motorHalt();
+            motorHalt();
+            
             tisch_demo0();
-                        motorHalt();
+            motorHalt();
+            
             tisch_demo0();
-                        motorHalt();
+            motorHalt();
+            
             tisch_demo0();
             motorHalt();
             break;
@@ -422,10 +427,8 @@ void loop()
 //            break;
           default:
             Serial.println("unbekanntes Kommando! Known Commands are 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, w, a, s, d, x, z");        
-      }
-      
+      }   
    }
-
 //Serial.println("Neue Testrunde");
 //delay(10000);
 //richtung();
