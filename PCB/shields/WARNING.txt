@@ -1,3 +1,9 @@
+Since PCB V4b
+	voltage divider for bluetooth on board
+
+Since PCB V4
+	two layer PCB
+	bluetooth connector on board
 
 Since PCB V3C 
 	pin 11 Licht
