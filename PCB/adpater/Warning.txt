@@ -1,0 +1,1 @@
+Bluetooth logic level adapter is obsolet since PCB V4 wich integrates the same functionality on board.

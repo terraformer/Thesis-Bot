@@ -10,6 +10,8 @@ Implementation of an autonomous floor cleaning robot as Open Source and Open Har
 
 #include <Wire.h>           //Arduino Core Functions
 #include "pins.h"           //Pin Zuordnung according to PCB Version
+#include "fun.h"
+#include "MPU6050.h"
 #include "HMC5883L.h" 		  //Magnetometer
 #include "rotary.h"   		  //Rotary Encoder
 #include "configuration.h"  //Global Configuration
@@ -22,6 +24,9 @@ Rotary r2 = Rotary(rot2a, rot2b);
 
 //remember last turn for zigzag pattern
 boolean flip = false;
+
+// Remote Command Variable
+String rcom; 
 
 void setup()
 {
@@ -362,21 +367,42 @@ ISR(PCINT2_vect) { //rotary encoder interrupt
     motorHalt();
 }   
 
-void loop()
-{
-//delay (1000);
+// exdendet remote command set
+void xcom(String com) {
+  char command;
+  String option;
 
-// send data only when you receive data:
-   if (Serial.available() > 0) {
-      // read the incoming byte:
-      RX = Serial.read();
+  command = com.charAt(0);
+  Serial.println(command);
 
-      // say what you got:
-      Serial.print("bestätige: |");
-      Serial.print(RX);
-      Serial.print("|");
-      
-      switch (RX) {
+  switch (command) {
+    case 'w': //move forward
+      motorVor();
+      break;
+    case 'a': //rotate counterclockwise
+      motorRechts(Power);
+      break;
+    case 'd': // rotate clockwise
+      motorLinks(Power);
+      break;
+    case 'z': // get IR value of floor sensor
+      boden_demo();
+      break;
+    case 's': // move backwards
+      motorRetour();
+      break;
+    case 'b': // beep
+      beep(1000);
+      break;
+    case 'x': // stop moving
+      motorHalt();
+      break;
+    case 'r': // rotate to degree
+      ausrichten(getoption(com));
+      break;
+    case 'm': // movement commands
+      { 
+        switch(getoption(com)) {
          case '0':
             drehen_demo();
             break;
@@ -414,41 +440,27 @@ void loop()
           case '9':
             print_mpu6050_raw();
             break;
-          case 'w':
-            motorVor();
-            break;
-          case 'a':
-            motorRechts(Power);
-            break;
-          case 'd':
-            motorLinks(Power);
-            break;
-          case 'z':
-            boden_demo();
-            break;
-          case 's':
-            motorRetour();
-            break;
-          case 'b':
-            beep(1000);
-            break;
-          case 'x':
-            motorHalt();
-//            break;
-          default:
-            Serial.println("no! use: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, w, a, s, d, x or z");        
-      }   
-   }
-//Serial.println("Neue Testrunde");
-//delay(10000);
-//richtung();
-
-//weitere verfügbare Demos: (einkommentieren zum aktivieren)
-
-//wand_suchen(); //buggy
-
-//Serial.println(boden_test()); //lame
-
-//wand_ausrichten(); //buggy
+        }
+      }
+      default:
+        Serial.println("no");
+  }
 }
 
+void loop()
+{
+   if (Serial.available() > 0) {
+      // read the incoming byte:
+      RX = Serial.read();
+
+      if (RX == '.') {
+        Serial.println("got:");
+        Serial.println(rcom);
+        xcom(rcom);
+        rcom = "";
+      } else {
+        rcom += RX;
+      }
+ 
+   }
+}

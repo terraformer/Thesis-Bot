@@ -349,3 +349,6 @@ void Orientieren() {
   Serial.println("oY;");
 }
 
+int getoption(String com) { // get Option value from remote commands
+  return (int)com.substring(com.indexOf(" ")+1).toInt();
+}
