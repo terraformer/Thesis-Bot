@@ -403,10 +403,10 @@ void xcom(String com) {
     case 'm': // movement commands
       { 
         switch(getoption(com)) {
-         case '0':
+         case 0:
             drehen_demo();
             break;
-         case '8':
+         case 8:
             tisch_demo0(); // :)
             motorHalt();
             
@@ -419,25 +419,25 @@ void xcom(String com) {
             tisch_demo0();
             motorHalt();
             break;
-         case '7':
+         case 7:
             feature_demo0(); // :)
             break;
-          case '3':
+          case 3:
             demo_rot90();
             break;
-          case '4':
+          case 4:
             muster_1_demo();
             break;
-          case '5':
+          case 5:
             demo_Vor_Rueck();
             break;
-          case '6':
+          case 6:
             random_direction();
             break;
-          case '1':
+          case 1:
             print_mpu6050();
             break;
-          case '9':
+          case 9:
             print_mpu6050_raw();
             break;
         }
