@@ -22,6 +22,9 @@ Rotary r2 = Rotary(rot2a, rot2b);
 
 //int distance;
 
+//direction
+//int aim;
+
 //remember last turn for zigzag pattern
 boolean flip = false;
 
@@ -40,7 +43,7 @@ timer = micros();
   
 Serial.begin(9600);
 
-Serial.println("Booting ...");
+Serial.println("Booting");
 
 // Initializing Sonar: Trigger Output and Echo Input
 pinMode(TRIGGER_PIN, OUTPUT);
@@ -400,7 +403,15 @@ void xcom(String com) {
     case 'r': // rotate to degree
       ausrichten(getoption(com));
       break;
-    case 'm': // movement commands
+    case 'm': // drive a circle
+       //motorVor(getoption(com),127);
+       for (int i=1; i < 500; i++){
+        balance(90);
+        motorVor();
+        delay(100);
+       }
+       break;
+    case 'p': // pattern movement commands
       { 
         switch(getoption(com)) {
          case 0:

@@ -177,15 +177,38 @@ void motorRetour(){ // Beide Motoren retour
 }
 
 void motorVor(){ // Beide Motoren vor
-  motorVor(255,255); //255 means full speed
+ // balance();
+  motorVor(lpower,rpower); //255 means full speed
+}
+
+void balance(int aim){ //balance motor power for driving circles
+ int r = richtung();
+ int a = fit360(aim);
+ if (diff(r, a) > 2) {
+  if (r > fit360(aim)) {
+    if (lpower < 255)
+      lpower++;
+    if (rpower> 90)
+      rpower--;
+  } else {
+    if (lpower < 255)
+      rpower++;
+    if (rpower> 90)
+      lpower--;
+  }
+ } else {
+  rpower = 255;
+  lpower = 255;
+ }
+ 
 }
 
 void motorVor(byte PL, byte PR) { //Both Motor forward but width individual Speed
   if (safe()) { // check for obstacles
   digitalWrite(B1A,LOW);   
-  digitalWrite(B1B,PL);
+  analogWrite(B1B,PL);
   digitalWrite(A1A,LOW);   
-  digitalWrite(A1B,PR);
+  analogWrite(A1B,PR);
   }
 }
 

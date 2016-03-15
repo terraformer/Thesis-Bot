@@ -36,7 +36,11 @@ int Ursprung;
 
 char RX = 'X'; //Serial Input Chars
 
-byte Power = 255; // Motor Power for rotation
+//motor power
+byte Power = 255; // for rotation
+byte lpower = 255; // left wheel
+byte rpower = 255;  //right wheel
+
 int floorsave = 60; // Min Sensor value for safe floor distance
 
 //Accel Gyro MPU 6050
