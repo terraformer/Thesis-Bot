@@ -43,7 +43,7 @@ timer = micros();
   
 Serial.begin(9600);
 
-Serial.println("Booting");
+Serial.println("UP");
 
 // Initializing Sonar: Trigger Output and Echo Input
 pinMode(TRIGGER_PIN, OUTPUT);
@@ -345,10 +345,8 @@ void muster_1_demo(){ // old zigzag move
   }
 }
 
-void boden_demo(){ // get floor value
-  int test = measureIR();
-  Serial.println(test);
-  //delay(100);
+int boden_demo(){ // get floor value
+  return measureIR();
 }
 
 void bahnwechselzurueck(){
@@ -376,7 +374,7 @@ void xcom(String com) {
   String option;
 
   command = com.charAt(0);
-  Serial.println(command);
+  //Serial.println(command);
 
   switch (command) {
     case 'w': //move forward
@@ -389,7 +387,7 @@ void xcom(String com) {
       motorLinks(Power);
       break;
     case 'z': // get IR value of floor sensor
-      boden_demo();
+      Serial.println(boden_demo());
       break;
     case 's': // move backwards
       motorRetour();
@@ -465,7 +463,7 @@ void loop()
       RX = Serial.read();
 
       if (RX == '.') {
-        Serial.println("got:");
+        Serial.print("got:");
         Serial.println(rcom);
         xcom(rcom);
         rcom = "";
