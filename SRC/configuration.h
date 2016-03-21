@@ -41,7 +41,8 @@ byte Power = 255; // for rotation
 byte lpower = 255; // left wheel
 byte rpower = 255;  //right wheel
 
-int floorsave = 60; // Min Sensor value for safe floor distance
+int floorsafe = 60; // Min Sensor value for safe floor distance
+int frontsafe = 60;
 
 //Accel Gyro MPU 6050
 const int MPU_addr=0x68;  // I2C address of the MPU-6050

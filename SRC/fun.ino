@@ -57,14 +57,27 @@ long measureSONAR() // gemittelte Front Sonar Messung
 
 boolean boden_test(){ //Auswertung Bodensensor
    int test = measureIR();
-   if (test > floorsave) // Referenz messen statt hardcoode!!! TODO!!!
+   if (test > floorsafe) // Referenz messen statt hardcoode!!! TODO!!!
      return 1; // Boden vorhanden
    else
      return 0; // kein Boden!
 }
 
-boolean front_test() { // check if there are obstacles in front 
-  return true; // dummy. TODO finish this function
+int getIR(int pin){ //get average IR value of given pin
+  double measureSum = 0.0;
+  for (int i = 0; i < MEASURE_SAMPLESir; i++)
+  {
+    delay(MEASURE_SAMPLE_DELAYir);
+    measureSum += analogRead(pin);
+  }
+  return measureSum / MEASURE_SAMPLESir;
+}
+
+boolean front_test(){ // check if there are obstacles in front 
+   if (getIR(lfIR), getIR(lsIR), (getIR(rfIR), getIR(rsIR) < frontsafe)) // Referenz messen statt hardcoode!!! TODO!!!
+     return 1; // passed: no obstacles
+   else
+     return 0; // failed: obstacle somewhere in the area in front of the robot
 }
 
 boolean safe() {
@@ -76,7 +89,7 @@ boolean safe() {
 }
 
 void beep(int f) { //basic adjustable Sound
-  for (int i=0; i<1000; i++) { // TODO: constant length for various frequencies
+  for (int i=0; i<(int(500/(2*f))) ; i++) { //constant length for various frequencies
     digitalWrite(buzzer, HIGH);
     delayMicroseconds(f);
     digitalWrite(buzzer, LOW);
@@ -200,7 +213,6 @@ void balance(int aim){ //balance motor power for driving circles
   rpower = 255;
   lpower = 255;
  }
- 
 }
 
 void motorVor(byte PL, byte PR) { //Both Motor forward but width individual Speed

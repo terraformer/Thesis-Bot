@@ -17,6 +17,7 @@ long singleMeasurementSONAR();
 long measureIR() ;
 long measureSONAR() ;
 boolean boden_test();
+int getIR();
 boolean front_test() ;
 boolean safe() ;
 void beep(int f) ;
