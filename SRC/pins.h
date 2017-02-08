@@ -34,6 +34,7 @@
   #define rfIR A3 //front right IR
   #define lsIR A6 //side left IR
   #define rsIR A7 //side right IR
+  
   //other pins
   /*
    * 0 (RX) connects to TX of bluetooth module (3.3V -> 5v)

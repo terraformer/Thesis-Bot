@@ -1,3 +1,12 @@
+/* 
+Copyright 2016 Christian Liebl. 
+
+Licenced under the GNU GPL Version 3.
+
+Contact: christian.liebl@live.de
+
+configuration
+*/
 
 #ifndef configuration_h
 #define configuration_h

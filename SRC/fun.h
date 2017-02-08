@@ -1,7 +1,3 @@
-
-#ifndef FUN_H
-#define FUN_H
-
 /* 
 Copyright 2016 Christian Liebl. 
 
@@ -11,6 +7,9 @@ Contact: christian.liebl@live.de
 
 Basisfunktionen
 */
+
+#ifndef FUN_H
+#define FUN_H
 
 int singleIR() ;
 long singleMeasurementSONAR();

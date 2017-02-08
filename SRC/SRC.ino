@@ -409,6 +409,12 @@ void xcom(String com) {
         delay(100);
        }
        break;
+    case 'q':
+       print_mpu6050();
+       break;
+    case 'e':
+       print_mpu6050_raw();
+       break;
     case 'p': // pattern movement commands
       { 
         switch(getoption(com)) {
@@ -442,12 +448,6 @@ void xcom(String com) {
             break;
           case 6:
             random_direction();
-            break;
-          case 1:
-            print_mpu6050();
-            break;
-          case 9:
-            print_mpu6050_raw();
             break;
         }
       }
