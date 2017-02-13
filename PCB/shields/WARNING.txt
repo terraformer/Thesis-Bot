@@ -1,3 +1,6 @@
+Since PCB V5b
+	Magnetometer, Buzzer and Accelerometer on board
+
 Since PCB V4b
 	voltage divider for bluetooth on board
 
