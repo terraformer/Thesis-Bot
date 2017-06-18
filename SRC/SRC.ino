@@ -377,6 +377,9 @@ void xcom(String com) {
   //Serial.println(command);
 
   switch (command) {
+    case 'y':
+      yabra();
+      break;
     case 'w': //move forward
       motorVor();
       break;
