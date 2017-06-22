@@ -73,10 +73,10 @@ mag_setup();
 delay(10000);
 
 // calibrate magnetometer
-Orientieren();
+//Orientieren();
 
 //und auswerten 
-Ursprung = richtung();
+//Ursprung = richtung();
 
 //floorsave = measureIR() + 20;
 
@@ -378,7 +378,7 @@ void xcom(String com) {
 
   switch (command) {
     case 'y':
-      yabra();
+      Serial.println(yabra());
       break;
     case 'w': //move forward
       motorVor();
@@ -464,10 +464,11 @@ void loop()
    if (Serial.available() > 0) {
       // read the incoming byte:
       RX = Serial.read();
+      //Serial.println(RX);
 
       if (RX == '.') {
-        Serial.print("got:");
-        Serial.println(rcom);
+        //Serial.print("got:");
+        //Serial.println(rcom);
         xcom(rcom);
         rcom = "";
       } else {

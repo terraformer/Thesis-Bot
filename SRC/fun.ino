@@ -88,7 +88,7 @@ boolean safe() {
   }  
 }
 
-void yabra() // json formatet collection of sensor readings for the yabra android app
+String yabra() // json formatet collection of sensor readings for the yabra android app
 {
   //Front
   long sonar = measureSONAR();
@@ -97,12 +97,12 @@ void yabra() // json formatet collection of sensor readings for the yabra androi
   double rf = getIR(rfIR);
   double rs = getIR(rsIR);
   //Boden
-  double br = getIR(IRrechts);
-  double bl = getIR(IRlinks);
+  double br = getIR(IRRechts);
+  double bl = getIR(IRLinks);
   //Magnotometer
   int mag = richtung();
   
-  Serial.println("[{\"sonar\":\""+ sonar +"\",\"lf\":\"" + lf + "\",\"ls\":\"" + ls + "\",\"rf\":\"" + rf + "\",\"rs\":\"" + rs + "\",\"br\":\"" + br + "\",\"bl\":\"" + bl + "\",\"mag\":\"" + mag + "\"}]");
+  return "{\"sonar\":\""+ String(sonar) +"\",\"lf\":\"" + String(lf) + "\",\"ls\":\"" + String(ls) + "\",\"rf\":\"" + String(rf) + "\",\"rs\":\"" + String(rs) + "\",\"br\":\"" + String(br) + "\",\"bl\":\"" + String(bl) + "\",\"mag\":\"" + String(mag) + "\"}/";
 }
 
 void beep(int f) { //basic adjustable Sound
