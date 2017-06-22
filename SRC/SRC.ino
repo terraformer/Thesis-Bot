@@ -404,6 +404,21 @@ void xcom(String com) {
     case 'r': // rotate to degree
       ausrichten(getoption(com));
       break;
+
+    //yabra com
+    case 'c':
+      lVo();
+      break;
+    case 'k':
+      rVo();
+      break;
+    case 'f':
+      lRu();
+      break;
+    case 'g':
+      rRu();
+      break;
+
     case 'm': // drive a circle
        //motorVor(getoption(com),127);
        for (int i=1; i < 500; i++){

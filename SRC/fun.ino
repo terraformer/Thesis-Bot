@@ -241,6 +241,27 @@ void motorVor(byte PL, byte PR) { //Both Motor forward but width individual Spee
   }
 }
 
+//yabradrive start
+
+void lVo(byte PL, byte PR) { //links vor
+  digitalWrite(B1A,LOW);   
+  analogWrite(B1B,PL);
+}
+void rVo(byte PL, byte PR) { //rechts vor
+  digitalWrite(A1A,LOW);   
+  analogWrite(A1B,PR);
+}
+void lRu(byte PL, byte PR) { //links rück
+  digitalWrite(A1A,PR);   
+  analogWrite(A1B,LOW);
+}
+void rRu(byte PL, byte PR) { //reckts rück
+  digitalWrite(B1A,PL);   
+  analogWrite(B1B,LOW);
+}
+
+//yabradrive end
+
 void motorLinks(byte P){ // P für PWM Puls der die Motorleistung steuert.
   if (safe()) { // Sicher ist sicher! Prüfen ob Boden unter den Rädern
   analogWrite(B1A,P);   
