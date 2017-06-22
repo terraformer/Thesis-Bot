@@ -407,16 +407,16 @@ void xcom(String com) {
 
     //yabra com
     case 'c':
-      lVo();
+      lVo(Power,Power);
       break;
     case 'k':
-      rVo();
+      rVo(Power,Power);
       break;
     case 'f':
-      lRu();
+      lRu(Power,Power);
       break;
     case 'g':
-      rRu();
+      rRu(Power,Power);
       break;
 
     case 'm': // drive a circle
